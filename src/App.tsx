@@ -1,7 +1,7 @@
 import * as React from 'react';
 import MenuIcon from '@mui/icons-material/Menu'
 import {AppBar,Box,Toolbar,IconButton,Typography,Link,Button,Container} from '@mui/material';
-
+import SidePane from './SidePane';
 
 
 function Copyright() {
@@ -37,7 +37,7 @@ export default function App() {
       </Toolbar>
     </AppBar>
     <Box display="flex" width="100%" height="100vh">
-      <Box sx={{border:"2px red solid"}} width="20vw">dadas</Box>
+      <Box sx={{border:"2px red solid"}} width="20vw"><SidePane/></Box>
       <Box sx={{border:"2px red solid"}} flexGrow={1}>dadas</Box>
     </Box>
   </Box>
