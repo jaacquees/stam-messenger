@@ -1,14 +1,18 @@
 import * as React from 'react';
-import { ListItem, Avatar,List,ListItemAvatar,ListItemText,Divider, Typography} from '@mui/material';
+import { useContext } from 'react';
+import { ListItem, Avatar,List,ListItemAvatar,ListItemText,Divider, Typography, CircularProgress} from '@mui/material';
 import { User,Message,Discussion } from './Types';
-import {users,discussions} from './data';
+import { DataContext } from './DataContext';
 
 interface IMessageViewProps{
   message:Message
 }
 
+
+
 export default function DiscussionDetail() {
 
+const {activeDiscussion} = useContext(DataContext);
 
   function MessageView({message}:IMessageViewProps){
       return(
@@ -28,11 +32,15 @@ export default function DiscussionDetail() {
 
 
   return (
+   
    <List>
-    <MessageView message={discussions[0].messages[0]}/>
-    <MessageView message={discussions[0].messages[1]}/>
-    <MessageView message={discussions[0].messages[0]}/>
-    <MessageView message={discussions[0].messages[1]}/>
-   </List>
+    {activeDiscussion ?
+    activeDiscussion.messages.map(
+      msg => <MessageView message={msg}/>
+      )
+   :
+   <CircularProgress/>
+    }
+    </List>
   );
 }

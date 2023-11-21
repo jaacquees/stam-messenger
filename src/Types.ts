@@ -5,6 +5,7 @@ export interface User {
 }
 
 export interface Message {
+    discussionId:number,
     sender:User,
     body:string,
     sent:Date
@@ -12,7 +13,8 @@ export interface Message {
 
 export interface Discussion {
     subject:string,
-    members: User[]
+    id:number,
+    participants: User[],
     messages: Message[]
 }
 
