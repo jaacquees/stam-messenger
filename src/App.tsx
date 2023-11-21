@@ -1,9 +1,8 @@
 import * as React from 'react';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import ProTip from './ProTip';
+import MenuIcon from '@mui/icons-material/Menu'
+import {AppBar,Box,Toolbar,IconButton,Typography,Link,Button,Container} from '@mui/material';
+
+
 
 function Copyright() {
   return (
@@ -19,14 +18,30 @@ function Copyright() {
 
 export default function App() {
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Material UI Create React App example in TypeScript
+    <Box sx={{ flexGrow: 1 }}>
+    <AppBar position="static">
+      <Toolbar>
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          News
         </Typography>
-        <ProTip />
-        <Copyright />
-      </Box>
-    </Container>
+        <Button color="inherit">Login</Button>
+      </Toolbar>
+    </AppBar>
+    <Box display="flex" width="100%" height="100vh">
+      <Box sx={{border:"2px red solid"}} width="20vw">dadas</Box>
+      <Box sx={{border:"2px red solid"}} flexGrow={1}>dadas</Box>
+    </Box>
+  </Box>
+  
+  
   );
 }
