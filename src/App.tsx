@@ -4,11 +4,11 @@ import {AppBar,Box,Toolbar,Typography,Button,Avatar, CircularProgress} from '@mu
 import DiscussionList from './DiscussionList';
 import DiscussionDetail from './DiscussionDetail';
 import {User,Message,Discussion} from './Types';
-import { DataContext } from './DataContext';
+import { DataContext,IDataContext } from './DataContext';
 
 export default function App() {
 
-  const {me} = useContext(DataContext);
+  const {me} = useContext(DataContext) as IDataContext;
 
   return (
     <Box sx={{ flexGrow: 1 }}>

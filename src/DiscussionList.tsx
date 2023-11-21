@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { ListItem, Avatar,List,ListItemAvatar,ListItemText,Divider, Typography, CircularProgress} from '@mui/material';
+import { ListItem, Avatar,List,ListItemAvatar,ListItemText,ListItemButton,Divider, Typography, CircularProgress} from '@mui/material';
 import {Discussion,User} from './Types';
-import { DataContext } from './DataContext';
+import { DataContext, IDataContext } from './DataContext';
 
 interface IDiscussionListItemProps{
   discussion:Discussion
@@ -11,20 +11,24 @@ interface IDiscussionListItemProps{
 export default function DiscussionList() {
 
   
-const {discussions} = useContext(DataContext);
+const {discussions,activeDiscussion,setActiveDiscussion} = useContext(DataContext) as IDataContext;
 
   function DiscussionListItem({discussion}:IDiscussionListItemProps){
       const lastMessage = discussion.messages[discussion.messages.length -1];
       return(
         <>
         <ListItem>
+          <ListItemButton 
+          selected={activeDiscussion?.id === discussion.id}
+          onClick={() => setActiveDiscussion(discussion)}>
           <ListItemAvatar>
             <Avatar src={lastMessage.sender.avatarUrl} />
           </ListItemAvatar>
           <ListItemText 
             primary={discussion.subject}
             secondary={<>{lastMessage.sender.name}<Typography margin={2} variant="caption">{`${lastMessage.body.substring(0,20)}...`}</Typography></>}
-/>
+          />
+        </ListItemButton>
         </ListItem>
         <Divider/>
         </>
@@ -35,7 +39,7 @@ const {discussions} = useContext(DataContext);
   return (
    <List>
     {discussions ?
-    discussions.map(dsc => <DiscussionListItem discussion={dsc}/>)
+    discussions.map(dsc => <DiscussionListItem key={dsc.id} discussion={dsc}/>)
     :
     <CircularProgress/>}
    </List>

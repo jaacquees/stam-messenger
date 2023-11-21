@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { ListItem, Avatar,List,ListItemAvatar,ListItemText,Divider, Typography, CircularProgress} from '@mui/material';
 import { User,Message,Discussion } from './Types';
-import { DataContext } from './DataContext';
+import { DataContext,IDataContext } from './DataContext';
 
 interface IMessageViewProps{
   message:Message
@@ -12,7 +12,7 @@ interface IMessageViewProps{
 
 export default function DiscussionDetail() {
 
-const {activeDiscussion} = useContext(DataContext);
+const {activeDiscussion} = useContext(DataContext) as IDataContext;
 
   function MessageView({message}:IMessageViewProps){
       return(
@@ -36,7 +36,7 @@ const {activeDiscussion} = useContext(DataContext);
    <List>
     {activeDiscussion ?
     activeDiscussion.messages.map(
-      msg => <MessageView message={msg}/>
+      (msg,k) => <MessageView key={k} message={msg}/>
       )
    :
    <CircularProgress/>
