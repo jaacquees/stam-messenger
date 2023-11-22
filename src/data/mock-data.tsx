@@ -1,4 +1,4 @@
-import {User,Message,Discussion} from './Types';
+import {User,Message,Discussion} from '../Types';
 
 export const usersData:User[] = [{name:"Joe Porcaro",avatarUrl:"https://gravatar.com/avatar/176e27f9bd3b68c235b24bd572286856?s=400&d=robohash&r=x",email:"joe@porcaro.com"}
 ,

@@ -9,3 +9,6 @@ Clone the repository locally then install it and run like so:
 npm install
 npm start
 ```
+## Some notes about the app
+
+Right now, the app is desktop only.

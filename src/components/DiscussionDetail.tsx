@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useContext,useState,useCallback } from 'react';
 import { ListItem, Avatar,List,ListItemAvatar,ListItemText,Divider,Card,Button,Box, Typography, Stack, TextField, CircularProgress} from '@mui/material';
-import { User,Message,Discussion } from './Types';
-import { DataContext,IDataContext } from './DataContext';
+import { User,Message,Discussion } from '../Types';
+import { DataContext,IDataContext } from '../contexts/DataContext';
 import Center from './Center';
+import ChipBox from './ChipBox';
 
 interface IMessageViewProps{
   message:Message
@@ -60,7 +61,14 @@ export default function DiscussionDetail() {
    <>
     {activeDiscussion?
     <Stack direction="column">
-      <Box m={1} borderRadius={2} bgcolor="white" height="calc(100vh - 150px - 80px)" overflow="auto">
+      <Stack borderRadius={2} direction="row" padding={1}>
+        
+          <Typography variant="h6">{activeDiscussion.subject}</Typography>
+          <Box flexGrow={1}/>
+          <ChipBox values={activeDiscussion.participants.map(p => p.name)}/>
+        
+      </Stack>
+      <Box m={1} borderRadius={2} bgcolor="white" height="calc(100vh - 150px - 80px - 48px)" overflow="auto">
       <List>
         {activeDiscussion.messages.map(  
          (msg,k) => <MessageView key={k} message={msg}/>

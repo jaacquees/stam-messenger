@@ -1,6 +1,6 @@
 import React, {createContext,useState,useEffect,useCallback} from 'react';
-import {User,Discussion,Message} from './Types';
-import {usersData,discussionsData} from './data';
+import {User,Discussion,Message} from '../Types';
+import {usersData,discussionsData} from '../data/mock-data';
 import {cloneDeep} from 'lodash';
 
 export interface IDataContext {
@@ -59,10 +59,7 @@ export const DataProvider = ( {children}:{children:any}) => {
   
   const postDiscussion = useCallback((participants:User[],subject:string,body:string) =>
     {
-      console.log('participants',participants);
-      console.log('subject',subject);
-      console.log('body',body);
-      console.log('discussions',discussions);
+
       return new Promise<void>((resolve,reject) =>{
       
         if(discussions){

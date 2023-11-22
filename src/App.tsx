@@ -2,12 +2,12 @@ import * as React from 'react';
 import { useContext,useState } from 'react';
 import {AppBar,Box,Toolbar,Typography,Button,Avatar, CircularProgress,Stack} from '@mui/material';
 import {AddCircle} from '@mui/icons-material'
-import DiscussionList from './DiscussionList';
-import DiscussionDetail from './DiscussionDetail';
+import DiscussionList from './components/DiscussionList';
+import DiscussionDetail from './components/DiscussionDetail';
 import {User,Message,Discussion} from './Types';
-import { DataContext,IDataContext } from './DataContext';
-import Center from './Center';
-import NewConversationDialog from './NewConversationDialog';
+import { DataContext,IDataContext } from './contexts/DataContext';
+import Center from './components/Center';
+import NewConversationDialog from './components/NewConversationDialog';
 
 
 export default function App() {
