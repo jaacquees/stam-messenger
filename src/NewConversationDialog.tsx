@@ -1,6 +1,6 @@
 import React from 'react';
 import {Dialog,DialogTitle,DialogContent,DialogContentText,DialogActions,Button,TextField} from '@mui/material';
-import { useContext,useState,useCallback } from 'react';
+import { useContext,useState,useCallback,useEffect } from 'react';
 import { IDataContext,DataContext } from './DataContext';
 import {User} from './Types';
 
@@ -13,18 +13,26 @@ export default function NewConversationDialog({open,setOpen}:IDialogProps){
 
     const {me,users,postDiscussion} = useContext(DataContext) as IDataContext
     const [subject,setSubject] = useState<string>("New Topic");
-    const [participants,setParticipants] = useState<(User)[]>([me as User]); //by that point I know 'me' exsits...
+    const [body,setBody] = useState<string>("");
+    const [participants,setParticipants] = useState<(User)[]>([]);
     const [sending,setSending] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        if(me)
+            setParticipants(v => [...v,me]);
+    },[]);
 
     const handleFailedSend = () => console.log('placeholder to handle failed send');
 
-    const handleCreate = useCallback(async () => {
-        if(subject.length>0 && participants.length>1){
+    const handleCreate = useCallback(() => {
+        
+        if(subject.length>0 && participants.length>0){
+            
           setSending(true);
-          postDiscussion(participants,subject)
+          postDiscussion(participants,subject,body)
           .then(() => {setSending(false);setOpen(false);})
           .catch(handleFailedSend);
-          
         }
     },[subject,participants]);
 
@@ -32,7 +40,7 @@ export default function NewConversationDialog({open,setOpen}:IDialogProps){
         <Dialog open={open}>
             <DialogTitle>Create New Conversation</DialogTitle>
             <DialogContent>
-                <DialogContentText>daskldjasldksjad</DialogContentText>
+                <DialogContentText>{sending? "sending" : ""}</DialogContentText>
                 <DialogActions>
                     <Button onClick={()=>setOpen(false)}>Cancel</Button>
                     <Button variant="contained"

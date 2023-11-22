@@ -10,7 +10,7 @@ export interface IDataContext {
     activeDiscussion:Discussion | null,
     setActiveDiscussion: ((discussion:Discussion) => void),
     postMessage: (sender:User,discussionId:number,sent:Date,body:string) => Promise<void>,
-    postDiscussion: (participants:User[],subject:string) => Promise<void>
+    postDiscussion: (participants:User[],subject:string,body:string) => Promise<void>
 
 }
 
@@ -57,31 +57,41 @@ export const DataProvider = ( {children}:{children:any}) => {
     });
   },[discussions]);
   
-  const postDiscussion = useCallback((participants:User[],subject:string) =>
+  const postDiscussion = useCallback((participants:User[],subject:string,body:string) =>
     {
+      console.log('participants',participants);
+      console.log('subject',subject);
+      console.log('body',body);
+      console.log('discussions',discussions);
       return new Promise<void>((resolve,reject) =>{
-      if(discussions){
+      
+        if(discussions){
         const data = cloneDeep(discussions) as Discussion[];
-      const id = data.length; //this is the length of the array, so the new index of the next conversation
+      const id = data.length + 1 ; //this is the length of the array, so the new index of the next conversation
       const newDiscussion:Discussion = {
         id,
         participants,
         subject,
-        messages:[]
+        messages:[
+          {sent:new Date(),
+          sender:me as User,
+          discussionId: id,
+          body}
+        ]
       };
       data.push(newDiscussion);
       //now before updating states and resolving the promise
       //we introduce an artificial waiting time
       setTimeout(() => {
                         setDiscussions(data);
-                        setActiveDiscussion(data[id]);
+                        setActiveDiscussion(data[id-1]);
                         resolve();}
       ,500);
     }else{
       reject();
     }
     });
-  },[discussions,users]);
+  },[discussions,users,me]);
 
   //useEffect which simulates a waiting time to get the initial data
 
