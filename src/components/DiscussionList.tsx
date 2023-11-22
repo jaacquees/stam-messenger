@@ -10,10 +10,11 @@ interface IDiscussionListItemProps{
 }
 
 interface IDiscussionListProps{
-  toggleDrawer:()=>void
+  toggleDrawer:()=>void,
+  listWidth:string
 }
 
-export default function DiscussionList({toggleDrawer}:IDiscussionListProps) {
+export default function DiscussionList({toggleDrawer,listWidth}:IDiscussionListProps) {
   
 const {discussions,activeDiscussion,setActiveDiscussion} = useContext(DataContext) as IDataContext;
 
@@ -41,7 +42,7 @@ const {discussions,activeDiscussion,setActiveDiscussion} = useContext(DataContex
 
 
   return (
-      <List>
+      <List sx={{width:listWidth}}>
         {discussions?.map(dsc => <DiscussionListItem key={dsc.id} discussion={dsc} toggleDrawer={toggleDrawer}/>)}
       </List>
   );

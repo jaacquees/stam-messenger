@@ -7,15 +7,15 @@ import DiscussionDetail from './components/DiscussionDetail';
 import { DataContext,IDataContext } from './contexts/DataContext';
 import Center from './components/Center';
 import NewConversationDialog from './components/NewConversationDialog';
-import { JsxElement } from 'typescript';
-
+import { ifTightScreen,ifWideScreen,listWidth } from './constants';
 
 export default function App() {
 
   const [dialogOpen,setDialogOpen] = useState<boolean>(false);
-  const {me,users,fetchMe,fetchUsers,fetchDiscussions} = useContext(DataContext) as IDataContext;
+  const {me,discussions,users,fetchMe,fetchUsers,fetchDiscussions} = useContext(DataContext) as IDataContext;
   const [drawerOpen,setDrawerOpen] = useState(false);
   const [popoverOpen,setPopoverOpen] = useState<Element|null>(null);
+  
   useEffect(() =>{
     fetchMe();
     fetchUsers();
@@ -43,14 +43,16 @@ export default function App() {
 
   return (
     <>
-    {me?
-    <Stack height="100vh">
+    {(me && discussions) ?
+    <Stack height="100vh" marginLeft={{xs:0,sm:0,md:listWidth,lg:listWidth,xl:listWidth}}>
     <AppBar position="static">
       <Toolbar>
-        <IconButton onClick={()=>setDrawerOpen(true)} sx={{display:{md:'none',lg:'block'}}}><Menu/></IconButton>
+        <IconButton
+        onClick={()=>setDrawerOpen(true)}
+        sx={{display:ifTightScreen}}><Menu/></IconButton>
         <Avatar src={me.avatarUrl} onClick={(e) => setPopoverOpen(e.target as Element)}/>
         <UserPopOver/>
-        <Typography fontSize={"5vw"} component="div" flexGrow={1} align="center">Stam Messenger</Typography>
+        <Typography variant="h6" component="div" flexGrow={1} align="center">Stam Messenger</Typography>
         <Button 
           disabled={!users}
           variant="contained"
@@ -64,8 +66,17 @@ export default function App() {
     <Drawer 
       open={drawerOpen}
       onClose={handleDrawerToggle}
-      variant="temporary"><DiscussionList toggleDrawer={handleDrawerToggle}/></Drawer>
-     
+      variant="temporary"
+      sx={{display:ifTightScreen}}>
+        <DiscussionList toggleDrawer={handleDrawerToggle} listWidth={listWidth}/>
+      </Drawer>
+      <Drawer 
+      open={drawerOpen}
+      onClose={handleDrawerToggle}
+      variant="permanent"
+      sx={{display:ifWideScreen}}>
+        <DiscussionList toggleDrawer={handleDrawerToggle} listWidth={listWidth}/>
+      </Drawer>
       <DiscussionDetail/>
       </Box>
     </Stack>

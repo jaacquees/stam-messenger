@@ -6,6 +6,7 @@ import { DataContext,IDataContext } from '../contexts/DataContext';
 import Center from './Center';
 import ChipBox from './ChipBox';
 
+
 interface IMessageViewProps{
   message:Message
 }
