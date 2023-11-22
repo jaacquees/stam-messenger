@@ -9,6 +9,7 @@ Clone the repository locally then install it and run like so:
 npm install
 npm start
 ```
+alternatively you may try the vercel deployment on: https://stam-messenger.vercel.app
 ## Some notes about the app
 
 Right now, the app is desktop only. A responsive version would need to be created by introducing a router, making the discussion list view a separate route from the discussion detail view.
