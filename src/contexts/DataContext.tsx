@@ -7,6 +7,9 @@ export interface IDataContext {
     users: User[] | null,
     discussions: Discussion[] | null,
     me:User | null,
+    fetchMe: (() => void),
+    fetchUsers: (() => void),
+    fetchDiscussions: (() => void),
     activeDiscussion:Discussion | null,
     setActiveDiscussion: ((discussion:Discussion) => void),
     postMessage: (sender:User,discussionId:number,sent:Date,body:string) => Promise<void>,
@@ -78,7 +81,7 @@ export const DataProvider = ( {children}:{children:any}) => {
       };
       data.push(newDiscussion);
       //now before updating states and resolving the promise
-      //we introduce an artificial waiting time
+      //we introduce an artificial waiting time to simulate latency of server requests
       setTimeout(() => {
                         setDiscussions(data);
                         setActiveDiscussion(data[id-1]);
@@ -90,19 +93,21 @@ export const DataProvider = ( {children}:{children:any}) => {
     });
   },[discussions,users,me]);
 
-  //useEffect which simulates a waiting time to get the initial data
+  //we introduce an artificial waiting time to simulate latency of server requests
+  
 
-  useEffect(()=>{
-      
-        setTimeout(() => setMe(usersData[2]),1000);
-      
-        setTimeout(()=> setUsers(usersData), 2000);
-      
-        setTimeout(()=> setDiscussions(discussionsData),3000);
-      
-    },[])
+  const fetchMe = useCallback(() => {
+    setTimeout(() => setMe(usersData[Math.floor(2*Math.random())]),1000);
+  },[]);
+  const fetchUsers = useCallback(() => {
+    setTimeout(()=> setUsers(usersData), 1500);
+  },[]);
 
+  const fetchDiscussions = useCallback(() => {
+    setTimeout(()=> setDiscussions(discussionsData),2500);
+  },[]);
 
+  
     return (
         <DataContext.Provider
           value={{
@@ -110,6 +115,9 @@ export const DataProvider = ( {children}:{children:any}) => {
               discussions,
               activeDiscussion,
               me,
+              fetchMe,
+              fetchUsers,
+              fetchDiscussions,
               setActiveDiscussion,
               postMessage,
               postDiscussion}}>

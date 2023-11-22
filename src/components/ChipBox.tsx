@@ -9,14 +9,14 @@ values:string[]
 
   const ChipContainer = styled(Box)(({theme}) => ({
     display:'flex',
-   flexWrap: 'wrap',
-   gap: 0.5  
+   flexWrap: 'nowrap',
+   gap: 1  
   }));
 
   export default function ChipBox({values}:IChipBoxProps){
 
     return(
-        <ChipContainer>
+        <ChipContainer >
                     {values.map((value,key) => (
                       <Chip 
                       key={key}

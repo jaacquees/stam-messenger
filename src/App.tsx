@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { useContext,useState } from 'react';
+import { useContext,useState,useEffect } from 'react';
 import {AppBar,Box,Toolbar,Typography,Button,Avatar, CircularProgress,Stack} from '@mui/material';
-import {AddCircle} from '@mui/icons-material'
 import DiscussionList from './components/DiscussionList';
 import DiscussionDetail from './components/DiscussionDetail';
-import {User,Message,Discussion} from './Types';
 import { DataContext,IDataContext } from './contexts/DataContext';
 import Center from './components/Center';
 import NewConversationDialog from './components/NewConversationDialog';
@@ -13,7 +11,15 @@ import NewConversationDialog from './components/NewConversationDialog';
 export default function App() {
 
   const [dialogOpen,setDialogOpen] = useState<boolean>(false);
-  const {me,users} = useContext(DataContext) as IDataContext;
+  const {me,users,fetchMe,fetchUsers,fetchDiscussions} = useContext(DataContext) as IDataContext;
+
+  useEffect(() =>{
+    fetchMe();
+    fetchUsers();
+    fetchDiscussions();
+  },[]);
+
+
   return (
     <>
     {me?
@@ -36,7 +42,7 @@ export default function App() {
       </Toolbar>  
     </AppBar>
     <Box display="flex" width="100vw" flexGrow={1}>
-      <Box width="30vw" minWidth={360} height="100%" overflow="auto"><DiscussionList/></Box>
+      <Box width="30vw" bgcolor="rgba(200,200,200,0.5)" minWidth={360} height="100%"><DiscussionList/></Box>
       <Box flexGrow={1} bgcolor="rgba(200,200,200,0.5)"><DiscussionDetail/></Box>
     </Box>
     </Stack>

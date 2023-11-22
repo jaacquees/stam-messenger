@@ -61,11 +61,12 @@ export default function DiscussionDetail() {
    <>
     {activeDiscussion?
     <Stack direction="column">
-      <Stack borderRadius={2} direction="row" padding={1}>
+      <Stack borderRadius={2} direction="row" padding={1} overflow="clip">
         
-          <Typography variant="h6">{activeDiscussion.subject}</Typography>
+          <Typography variant="h6" noWrap>{activeDiscussion.subject}</Typography>
           <Box flexGrow={1}/>
-          <ChipBox values={activeDiscussion.participants.map(p => p.name)}/>
+          <ChipBox 
+          values={activeDiscussion.participants.map(p => p.name)}/>
         
       </Stack>
       <Box m={1} borderRadius={2} bgcolor="white" height="calc(100vh - 150px - 80px - 48px)" overflow="auto">

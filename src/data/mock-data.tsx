@@ -16,7 +16,7 @@ participants:[{name:"Joe Porcaro",avatarUrl:"https://gravatar.com/avatar/176e27f
 ,
 {name:"Phil Collins",avatarUrl:"https://gravatar.com/avatar/6767d9badf28afc8d646049ee1112d3b?s=400&d=robohash&r=pg",email:"phil@collins.com"}
 ],
-subject:"kick drum pedals",
+subject:"Kick Drum Pedals",
 messages:[{
     discussionId:1,
     sender: {name:"Joe Porcaro",avatarUrl:"https://gravatar.com/avatar/176e27f9bd3b68c235b24bd572286856?s=400&d=robohash&r=x",email:"joe@porcaro.com"}
@@ -48,7 +48,7 @@ messages:[{
     
     {name:"Phil Collins",avatarUrl:"https://gravatar.com/avatar/6767d9badf28afc8d646049ee1112d3b?s=400&d=robohash&r=pg",email:"phil@collins.com"}
     ],
-    subject:"new record",
+    subject:"New Record",
     messages:[{
         discussionId:2,
         sender: {name:"Quincy Jones",avatarUrl:"https://gravatar.com/avatar/69303b91aebcf0549fe830064e8e5356?s=400&d=robohash&r=pg",email:"quincy@jones.com"}

@@ -37,7 +37,7 @@ const {discussions,activeDiscussion,setActiveDiscussion} = useContext(DataContex
 
 
   return (
-    <Box height="100%">
+    <Box height="calc(100% - 16px)" margin={2} boxSizing="content-box" borderRadius={2} overflow="auto" bgcolor="white" >
     {discussions ?
       <List>
     {discussions.map(dsc => <DiscussionListItem key={dsc.id} discussion={dsc}/>)}
