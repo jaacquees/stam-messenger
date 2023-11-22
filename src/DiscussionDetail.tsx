@@ -59,7 +59,7 @@ export default function DiscussionDetail() {
   return (
    <>
     {activeDiscussion?
-    <Stack direction="column" height="100%">
+    <Stack direction="column">
       <Box m={1} borderRadius={2} bgcolor="white" height="calc(100vh - 150px - 80px)" overflow="auto">
       <List>
         {activeDiscussion.messages.map(  

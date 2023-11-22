@@ -3,13 +3,13 @@ import { useContext } from 'react';
 import { ListItem, Box,Avatar,List,ListItemAvatar,ListItemText,ListItemButton,Divider, Typography, CircularProgress} from '@mui/material';
 import {Discussion,User} from './Types';
 import { DataContext, IDataContext } from './DataContext';
+import Center from './Center';
 
 interface IDiscussionListItemProps{
   discussion:Discussion
 }
 
 export default function DiscussionList() {
-
   
 const {discussions,activeDiscussion,setActiveDiscussion} = useContext(DataContext) as IDataContext;
 
@@ -37,11 +37,13 @@ const {discussions,activeDiscussion,setActiveDiscussion} = useContext(DataContex
 
 
   return (
-   <List>
+    <Box height="100%">
     {discussions ?
-    discussions.map(dsc => <DiscussionListItem key={dsc.id} discussion={dsc}/>)
+      <List>
+    {discussions.map(dsc => <DiscussionListItem key={dsc.id} discussion={dsc}/>)}
+    </List>
     :
-    <CircularProgress/>}
-   </List>
+    <Center><CircularProgress/></Center>}
+    </Box>
   );
 }
