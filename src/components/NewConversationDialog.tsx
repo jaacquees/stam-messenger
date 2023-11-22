@@ -27,7 +27,6 @@ export default function NewConversationDialog({open,setOpen}:IDialogProps){
     },[open]);
 
     const handleClear = useCallback(()=>{
-        console.log("he ho");
         setSubject("New Topic");
         setParticipants([]);
         setBody("");
@@ -45,7 +44,7 @@ export default function NewConversationDialog({open,setOpen}:IDialogProps){
     },[subject,participants,body]);
 
     return(
-        <Dialog open={open} onClose={()=>console.log("yes!!")}>
+        <Dialog open={open}>
             <DialogTitle width="50vw">Create New Conversation</DialogTitle>
             <DialogContent>
                 
