@@ -17,7 +17,7 @@ const {discussions,activeDiscussion,setActiveDiscussion} = useContext(DataContex
       const lastMessage = discussion.messages[discussion.messages.length -1];
       return(
         <>
-        <ListItem>
+        <ListItem disablePadding>
           <ListItemButton 
           selected={activeDiscussion?.id === discussion.id}
           onClick={() => setActiveDiscussion(discussion)}>

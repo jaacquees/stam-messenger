@@ -9,7 +9,9 @@ export interface IDataContext {
     me:User | null,
     activeDiscussion:Discussion | null,
     setActiveDiscussion: ((discussion:Discussion) => void),
-    postMessage: (sender:User,discussionId:number,sent:Date,body:string) => Promise<void>
+    postMessage: (sender:User,discussionId:number,sent:Date,body:string) => Promise<void>,
+    postDiscussion: (participants:User[],subject:string) => Promise<void>
+
 }
 
 export const DataContext = createContext<IDataContext | null>(null);
@@ -48,13 +50,39 @@ export const DataProvider = ( {children}:{children:any}) => {
                         setDiscussions(data);
                         setActiveDiscussion(data[i]);
                         resolve();}
-      ,2500);
+      ,500);
     }else{
       reject();
     }
     });
   },[discussions]);
-    
+  
+  const postDiscussion = useCallback((participants:User[],subject:string) =>
+    {
+      return new Promise<void>((resolve,reject) =>{
+      if(discussions){
+        const data = cloneDeep(discussions) as Discussion[];
+      const id = data.length; //this is the length of the array, so the new index of the next conversation
+      const newDiscussion:Discussion = {
+        id,
+        participants,
+        subject,
+        messages:[]
+      };
+      data.push(newDiscussion);
+      //now before updating states and resolving the promise
+      //we introduce an artificial waiting time
+      setTimeout(() => {
+                        setDiscussions(data);
+                        setActiveDiscussion(data[id]);
+                        resolve();}
+      ,500);
+    }else{
+      reject();
+    }
+    });
+  },[discussions,users]);
+
   //useEffect which simulates a waiting time to get the initial data
 
   useEffect(()=>{
@@ -76,7 +104,8 @@ export const DataProvider = ( {children}:{children:any}) => {
               activeDiscussion,
               me,
               setActiveDiscussion,
-              postMessage}}>
+              postMessage,
+              postDiscussion}}>
           {children}
         </DataContext.Provider>
       );

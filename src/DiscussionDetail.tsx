@@ -20,10 +20,10 @@ export default function DiscussionDetail() {
   
   const handleFailedSend = () => console.log("placeholder for handling of failed send...");
 
-  const handleSend = useCallback(async () => {
+  const handleSend = useCallback(() => {
       if(messageText.length>0 && me && activeDiscussion){
         setSending(true);
-        await postMessage(me,activeDiscussion.id,new Date(),messageText)
+        postMessage(me,activeDiscussion.id,new Date(),messageText)
         .then(() => setSending(false))
         .catch(handleFailedSend);
         handleClear();
@@ -44,7 +44,7 @@ export default function DiscussionDetail() {
             <Avatar alt={message.sender.name} src={message.sender.avatarUrl} />
           </ListItemAvatar>
           <ListItemText 
-            primary={<>{message.sender.name}<Typography variant="caption" color="secondary" margin={2}>{message.sent.toLocaleString()}</Typography></>}
+            primary={<>{message.sender.name}<Typography variant="caption" color="grey" margin={2}>{message.sent.toLocaleString()}</Typography></>}
             secondary={message.body}
           />
         </ListItem>
