@@ -10,8 +10,6 @@ interface IDialogProps {
     setOpen:(value:boolean) => void
 }
 
- 
-
 export default function NewConversationDialog({open,setOpen}:IDialogProps){
 
     const {me,users,postDiscussion} = useContext(DataContext) as IDataContext
@@ -21,6 +19,19 @@ export default function NewConversationDialog({open,setOpen}:IDialogProps){
     const [sending,setSending] = useState<boolean>(false);
 
     const handleFailedSend = () => console.log('placeholder to handle failed send');
+
+    useEffect(()=>{
+        if(!open){
+            handleClear();
+        }
+    },[open]);
+
+    const handleClear = useCallback(()=>{
+        console.log("he ho");
+        setSubject("New Topic");
+        setParticipants([]);
+        setBody("");
+    },[])
 
     const handleCreate = useCallback(() => {
         
@@ -34,10 +45,10 @@ export default function NewConversationDialog({open,setOpen}:IDialogProps){
     },[subject,participants,body]);
 
     return(
-        <Dialog open={open}>
+        <Dialog open={open} onClose={()=>console.log("yes!!")}>
             <DialogTitle width="50vw">Create New Conversation</DialogTitle>
             <DialogContent>
-                <DialogContentText>
+                
                     <Stack spacing={1} padding={1}>
                     <TextField 
                     fullWidth
@@ -60,8 +71,6 @@ export default function NewConversationDialog({open,setOpen}:IDialogProps){
                     onChange={(e)=>setBody(e.target.value)}/>
                     </Stack>
 
-
-                </DialogContentText>
                 <DialogActions>
                     <Button onClick={()=>setOpen(false)}>Cancel</Button>
                     <Button variant="contained"
