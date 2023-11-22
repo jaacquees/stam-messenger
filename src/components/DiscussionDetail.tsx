@@ -60,7 +60,7 @@ export default function DiscussionDetail() {
   return (
    <>
     {activeDiscussion?
-    <Stack direction="column">
+    <Stack direction="column" bgcolor="#e0e0e0">
       <Stack borderRadius={2} direction="row" padding={1} overflow="clip">
         
           <Typography variant="h6" noWrap>{activeDiscussion.subject}</Typography>

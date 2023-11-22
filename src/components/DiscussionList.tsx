@@ -3,24 +3,28 @@ import { useContext } from 'react';
 import { ListItem, Box,Avatar,List,ListItemAvatar,ListItemText,ListItemButton,Divider, Typography, CircularProgress} from '@mui/material';
 import {Discussion,User} from '../Types';
 import { DataContext, IDataContext } from '../contexts/DataContext';
-import Center from './Center';
 
 interface IDiscussionListItemProps{
-  discussion:Discussion
+  discussion:Discussion,
+  toggleDrawer:()=>void
 }
 
-export default function DiscussionList() {
+interface IDiscussionListProps{
+  toggleDrawer:()=>void
+}
+
+export default function DiscussionList({toggleDrawer}:IDiscussionListProps) {
   
 const {discussions,activeDiscussion,setActiveDiscussion} = useContext(DataContext) as IDataContext;
 
-  function DiscussionListItem({discussion}:IDiscussionListItemProps){
+  function DiscussionListItem({discussion,toggleDrawer}:IDiscussionListItemProps){
       const lastMessage = discussion.messages[discussion.messages.length -1];
       return(
         <>
         <ListItem disablePadding>
           <ListItemButton 
           selected={activeDiscussion?.id === discussion.id}
-          onClick={() => setActiveDiscussion(discussion)}>
+          onClick={() => {setActiveDiscussion(discussion);toggleDrawer();}}>
           <ListItemAvatar>
             <Avatar src={lastMessage.sender.avatarUrl} />
           </ListItemAvatar>
@@ -37,13 +41,8 @@ const {discussions,activeDiscussion,setActiveDiscussion} = useContext(DataContex
 
 
   return (
-    <Box height="calc(100% - 16px)" margin={2} boxSizing="content-box" borderRadius={2} overflow="auto" bgcolor="white" >
-    {discussions ?
       <List>
-    {discussions.map(dsc => <DiscussionListItem key={dsc.id} discussion={dsc}/>)}
-    </List>
-    :
-    <Center><CircularProgress/></Center>}
-    </Box>
+        {discussions?.map(dsc => <DiscussionListItem key={dsc.id} discussion={dsc} toggleDrawer={toggleDrawer}/>)}
+      </List>
   );
 }
