@@ -24,12 +24,10 @@ export default function App() {
           {me.name}
         </Typography>
         <Button color="inherit">Login</Button>
-      </Toolbar>
-      :
-    
+      </Toolbar>  
     </AppBar>
     <Box display="flex" width="100vw" flexGrow={1}>
-      <Box width="30vw" minWidth={360} overflow="hidden" sx={{overflowY:"scroll"}}><DiscussionList/></Box>
+      <Box width="30vw" minWidth={360} overflow="auto"><DiscussionList/></Box>
       <Box flexGrow="1" bgcolor="rgba(200,200,200,0.5)"><DiscussionDetail/></Box>
     </Box>
     </Stack>

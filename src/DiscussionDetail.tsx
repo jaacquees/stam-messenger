@@ -60,7 +60,7 @@ export default function DiscussionDetail() {
    <>
     {activeDiscussion?
     <Stack direction="column" height="100%">
-      <Box m={1} borderRadius={2} bgcolor="white" flexGrow={1} overflow="hidden" sx={{overflowY:"scroll"}}>
+      <Box m={1} borderRadius={2} bgcolor="white" height="calc(100vh - 150px - 80px)" overflow="auto">
       <List>
         {activeDiscussion.messages.map(  
          (msg,k) => <MessageView key={k} message={msg}/>
