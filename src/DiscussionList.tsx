@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { ListItem, Avatar,List,ListItemAvatar,ListItemText,ListItemButton,Divider, Typography, CircularProgress} from '@mui/material';
+import { ListItem, Box,Avatar,List,ListItemAvatar,ListItemText,ListItemButton,Divider, Typography, CircularProgress} from '@mui/material';
 import {Discussion,User} from './Types';
 import { DataContext, IDataContext } from './DataContext';
 

@@ -1,13 +1,15 @@
-import React, {createContext,useState,useEffect} from 'react';
-import {User,Discussion} from './Types';
+import React, {createContext,useState,useEffect,useCallback} from 'react';
+import {User,Discussion,Message} from './Types';
 import {usersData,discussionsData} from './data';
+import {cloneDeep} from 'lodash';
 
 export interface IDataContext {
     users: User[] | null,
     discussions: Discussion[] | null,
     me:User | null,
     activeDiscussion:Discussion | null,
-    setActiveDiscussion: ((discussion:Discussion) => void)
+    setActiveDiscussion: ((discussion:Discussion) => void),
+    postMessage: (sender:User,discussionId:number,sent:Date,body:string) => Promise<void>
 }
 
 export const DataContext = createContext<IDataContext | null>(null);
@@ -20,7 +22,42 @@ export const DataProvider = ( {children}:{children:any}) => {
     const [me,setMe] = useState<User|null>(null);
     const [activeDiscussion,setActiveDiscussion] = useState<Discussion|null>(null);
 
-    useEffect(()=>{
+    //here postMessage changes the state of the "discussions" data object
+    //it is a bit convoluted as it is deep cloning the object, mutating it
+    //and setting the state to the new mutated data object
+    //in a full app, the post message will simply post a message to a web service,
+    //it will trigger a kind of websocket which will tell the app the data has changed
+    //and the app will update its local data object accordingly
+
+    const postMessage = useCallback((sender:User,discussionId:number,sent:Date,body:string) =>
+    {
+      return new Promise<void>((resolve,reject) =>{
+      if(discussions){
+        const data = cloneDeep(discussions) as Discussion[];
+      const i = data.findIndex(d => d.id===discussionId);
+      const newMessage:Message = {
+        sent,
+        sender,
+        body,
+        discussionId
+      };
+      data[i].messages.push(newMessage);
+      //now before updating states and resolving the promise
+      //we introduce an artificial waiting time
+      setTimeout(() => {
+                        setDiscussions(data);
+                        setActiveDiscussion(data[i]);
+                        resolve();}
+      ,2500);
+    }else{
+      reject();
+    }
+    });
+  },[discussions]);
+    
+  //useEffect which simulates a waiting time to get the initial data
+
+  useEffect(()=>{
       
         setTimeout(() => setMe(usersData[2]),1000);
       
@@ -32,7 +69,14 @@ export const DataProvider = ( {children}:{children:any}) => {
 
 
     return (
-        <DataContext.Provider value={{users,discussions,activeDiscussion,me,setActiveDiscussion}}>
+        <DataContext.Provider
+          value={{
+              users,
+              discussions,
+              activeDiscussion,
+              me,
+              setActiveDiscussion,
+              postMessage}}>
           {children}
         </DataContext.Provider>
       );
